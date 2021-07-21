@@ -1,3 +1,4 @@
+from tarfile import ENCODING
 from tkinter import *
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -23,12 +24,12 @@ class youtubeSearcher:
 
         searchButton = tk.Button(root, text="SEARCH", command= self.search, height = "1", width = "16")
         searchButton.grid(row = 2, column = 1)
-    
+
     def search(self):
         url = "https://www.youtube.com/results?search_query=" + self.searchBox.get() + "&sp=CAM%253D"
-        driver = webdriver.Chrome(ChromeDriverManager().install())
+        driver = webdriver.Chrome('C:\\Users\\ejtca\\Desktop\\youtube-top10-views\\chromedriver.exe')
         driver.get(url)
-        driver.set_window_position(-3000,0)
+        driver.set_window_position(0,0)
         time.sleep(5)
 
         vidTitle = driver.find_elements_by_xpath('//*[@id="video-title"]')
@@ -48,7 +49,8 @@ class youtubeSearcher:
             viewsCount.append(int(viewTemp.replace(',', '')))
         
         #saves the top 15 views in the file, not going below the min threshold
-        outputFile = open('YoutubeTopViews.txt', 'w')
+        path = "C:\\Users\\ejtca\\Desktop\\youtube-top10-views\\text.txt"
+        outputFile = open(path, 'w', encoding= 'utf-8')
         viewThreshold = int(self.viewsBox.get())
         count = 1
         for i in range(0, len(viewsCount)):
